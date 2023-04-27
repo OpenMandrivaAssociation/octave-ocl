@@ -36,8 +36,8 @@ selectively using available OpenCL hardware.
 %autosetup -p1 -n %{octpkg}-%{version}
 
 %build
-#export CC=gcc
-#export CXX=g++
+export CC=gcc
+export CXX=g++
 %set_build_flags
 %octave_pkg_build
 
