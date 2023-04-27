@@ -1,15 +1,15 @@
 %global octpkg ocl
 
 Summary:	OpenCL support for GNU Octave
-Name:		octave-%{octpkg}
-Version:	1.2.0
+Name:		octave-ocl
+Version:	1.2.1
 Release:	1
-Source0:	https://downloads.sourceforge.net/octave/%{octpkg}-%{version}.tar.gz
 License:	GPLv3+
 Group:		Sciences/Mathematics
-Url:		https://packages.octave.org/%{octpkg}/
+Url:		https://packages.octave.org/ocl/
+Source0:	https://downloads.sourceforge.net/octave/ocl-%{version}.tar.gz
 
-BuildRequires:	octave-devel >= 4.2.0
+BuildRequires:  octave-devel >= 4.2.0
 BuildRequires:	gomp-devel
 
 Requires:	octave(api) = %{octave_api}
@@ -18,28 +18,26 @@ Requires(post): octave
 Requires(postun): octave
 
 %description
-Package using OpenCL for parallelization of (SIMD) computations, selectively
-using available OpenCL hardware
+Package using OpenCL for parallelization of (SIMD) computations,
+selectively using available OpenCL hardware.
 
 %files
 %license COPYING
 %doc NEWS
-%dir %{octpkglibdir}
-%{octpkglibdir}/*
 %dir %{octpkgdir}
 %{octpkgdir}/*
+%dir %{octpkglibdir}
+%{octpkglibdir}/*
+#{_metainfodir}/*.metainfo.xml
 
 #---------------------------------------------------------------------------
 
 %prep
 %autosetup -p1 -n %{octpkg}-%{version}
 
-# remove backup files
-#find . -name \*~ -delete
-
 %build
-export CC=gcc
-export CXX=g++
+#export CC=gcc
+#export CXX=g++
 %set_build_flags
 %octave_pkg_build
 
