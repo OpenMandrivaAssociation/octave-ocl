@@ -2,8 +2,8 @@
 
 Summary:	OpenCL support for GNU Octave
 Name:		octave-ocl
-Version:	1.2.2
-Release:	2
+Version:	1.2.3
+Release:	1
 License:	GPLv3+
 Group:		Sciences/Mathematics
 Url:		https://packages.octave.org/ocl/
