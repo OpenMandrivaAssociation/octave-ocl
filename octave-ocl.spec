@@ -10,12 +10,16 @@ Url:		https://packages.octave.org/ocl/
 Source0:	https://downloads.sourceforge.net/octave/ocl-%{version}.tar.gz
 
 BuildRequires:  octave-devel >= 4.2.0
-BuildRequires:	gomp-devel
+#BuildRequires:	gomp-devel
+BuildRequires:	pkgconfig(OpenCL)
 
 Requires:	octave(api) = %{octave_api}
 
 Requires(post): octave
 Requires(postun): octave
+
+%patchlist
+octave-ocl-1.2.3-fix_specialize.patch
 
 %description
 Package using OpenCL for parallelization of (SIMD) computations,
@@ -36,8 +40,6 @@ selectively using available OpenCL hardware.
 %autosetup -p1 -n %{octpkg}-%{version}
 
 %build
-export CC=gcc
-export CXX=g++
 %set_build_flags
 %octave_pkg_build
 

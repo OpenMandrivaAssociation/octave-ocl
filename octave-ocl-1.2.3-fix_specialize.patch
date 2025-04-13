@@ -1,0 +1,66 @@
+--- a/src/ocl_array.cc
++++ b/src/ocl_array.cc
+@@ -46,6 +46,31 @@
+ // TODO:
+ // - handle empty ocl matrices everywhere, mostly without error (currently, empty matrices are inoperable)
+ 
++// ---------- OclArray<T> specializations
++
++
++#define SPECIALIZE_OCLARRAY( T, OCT_STR, OCLC_STR, IS_INTEGER, IS_UINT, IS_COMPLEX ) \
++  template <> std::string OclArray<T>::type_str_oct = #OCT_STR; \
++  template <> std::string OclArray<T>::type_str_oclc = #OCLC_STR; \
++  template <> OclProgram OclArray<T>::array_prog = OclProgram (); \
++  template <> std::vector<int> OclArray<T>::kernel_indices  = std::vector<int> (); \
++  template <> bool OclArray<T>::is_integer_type (void) { return IS_INTEGER; } \
++  template <> bool OclArray<T>::is_uint_type (void) { return IS_UINT; } \
++  template <> bool OclArray<T>::is_complex_type (void) { return IS_COMPLEX; }
++
++
++SPECIALIZE_OCLARRAY (octave_int8,    int8,    char,     true,   false,  false );
++SPECIALIZE_OCLARRAY (octave_int16,   int16,   short,    true,   false,  false );
++SPECIALIZE_OCLARRAY (octave_int32,   int32,   int,      true,   false,  false );
++SPECIALIZE_OCLARRAY (octave_int64,   int64,   long,     true,   false,  false );
++SPECIALIZE_OCLARRAY (octave_uint8,   uint8,   uchar,    true,   true,   false );
++SPECIALIZE_OCLARRAY (octave_uint16,  uint16,  ushort,   true,   true,   false );
++SPECIALIZE_OCLARRAY (octave_uint32,  uint32,  uint,     true,   true,   false );
++SPECIALIZE_OCLARRAY (octave_uint64,  uint64,  ulong,    true,   true,   false );
++SPECIALIZE_OCLARRAY (float,          single,  float,    false,  false,  false );
++SPECIALIZE_OCLARRAY (double,         double,  double,   false,  false,  false );
++SPECIALIZE_OCLARRAY (FloatComplex,   single,  float2,   false,  false,  true  );
++SPECIALIZE_OCLARRAY (Complex,        double,  double2,  false,  false,  true  );
+ 
+ // ---------- static helper functions
+ 
+@@ -2040,31 +2065,6 @@ operator << (std::ostream& os, const Ocl
+ }
+ 
+ 
+-// ---------- OclArray<T> specializations
+-
+-
+-#define SPECIALIZE_OCLARRAY( T, OCT_STR, OCLC_STR, IS_INTEGER, IS_UINT, IS_COMPLEX ) \
+-  template <> std::string OclArray<T>::type_str_oct = #OCT_STR; \
+-  template <> std::string OclArray<T>::type_str_oclc = #OCLC_STR; \
+-  template <> OclProgram OclArray<T>::array_prog = OclProgram (); \
+-  template <> std::vector<int> OclArray<T>::kernel_indices  = std::vector<int> (); \
+-  template <> bool OclArray<T>::is_integer_type (void) { return IS_INTEGER; } \
+-  template <> bool OclArray<T>::is_uint_type (void) { return IS_UINT; } \
+-  template <> bool OclArray<T>::is_complex_type (void) { return IS_COMPLEX; }
+-
+-
+-SPECIALIZE_OCLARRAY (octave_int8,    int8,    char,     true,   false,  false );
+-SPECIALIZE_OCLARRAY (octave_int16,   int16,   short,    true,   false,  false );
+-SPECIALIZE_OCLARRAY (octave_int32,   int32,   int,      true,   false,  false );
+-SPECIALIZE_OCLARRAY (octave_int64,   int64,   long,     true,   false,  false );
+-SPECIALIZE_OCLARRAY (octave_uint8,   uint8,   uchar,    true,   true,   false );
+-SPECIALIZE_OCLARRAY (octave_uint16,  uint16,  ushort,   true,   true,   false );
+-SPECIALIZE_OCLARRAY (octave_uint32,  uint32,  uint,     true,   true,   false );
+-SPECIALIZE_OCLARRAY (octave_uint64,  uint64,  ulong,    true,   true,   false );
+-SPECIALIZE_OCLARRAY (float,          single,  float,    false,  false,  false );
+-SPECIALIZE_OCLARRAY (double,         double,  double,   false,  false,  false );
+-SPECIALIZE_OCLARRAY (FloatComplex,   single,  float2,   false,  false,  true  );
+-SPECIALIZE_OCLARRAY (Complex,        double,  double2,  false,  false,  true  );
+ // C type, octave interpreter class, OpenCL C type
+ 
+ 
