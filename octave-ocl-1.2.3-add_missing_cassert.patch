@@ -1,0 +1,10 @@
+--- a/src/ocl_ov_matrix_ops.cc
++++ b/src/ocl_ov_matrix_ops.cc
+@@ -28,6 +28,7 @@
+  *   Copyright (C) 2009 VZLU Prague, a.s.
+  */
+ 
++#include <cassert>
+ #include <octave/oct.h>
+ #include <ops.h>
+ 

@@ -20,6 +20,7 @@ Requires(postun): octave
 
 %patchlist
 octave-ocl-1.2.3-fix_specialize.patch
+octave-ocl-1.2.3-add_missing_cassert.patch
 
 %description
 Package using OpenCL for parallelization of (SIMD) computations,
